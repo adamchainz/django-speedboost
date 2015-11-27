@@ -7,8 +7,8 @@ import types
 import unittest
 from contextlib import contextmanager
 
-from django.template import Context, TemplateDoesNotExist
-from django.template.engine import Engine
+from django_speedboost.template import Context, TemplateDoesNotExist
+from django_speedboost.template.engine import Engine
 from django.test import SimpleTestCase, override_settings
 from django.utils import six
 

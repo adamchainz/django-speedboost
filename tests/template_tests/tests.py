@@ -5,10 +5,11 @@ import sys
 
 from django.contrib.auth.models import Group
 from django.core import urlresolvers
-from django.template import (
+from django.test import SimpleTestCase, override_settings
+
+from django_speedboost.template import (
     Context, Template, TemplateSyntaxError, engines, loader,
 )
-from django.test import SimpleTestCase, override_settings
 
 
 class TemplateTests(SimpleTestCase):
@@ -28,7 +29,7 @@ class TemplateTests(SimpleTestCase):
 
     @override_settings(
         TEMPLATES=[{
-            'BACKEND': 'django.template.backends.django.DjangoTemplates',
+            'BACKEND': 'django_speedboost.template.backends.django.DjangoTemplates',
             'OPTIONS': {'string_if_invalid': '%s is invalid'},
         }],
         SETTINGS_MODULE='also_something',

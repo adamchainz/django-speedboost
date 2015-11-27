@@ -2,12 +2,13 @@ from __future__ import unicode_literals
 
 import os
 
-from django.template import Context, Engine, Template, TemplateSyntaxError
-from django.template.base import Node
 from django.test import SimpleTestCase, ignore_warnings
 from django.test.utils import extend_sys_path
 from django.utils import six
 from django.utils.deprecation import RemovedInDjango110Warning
+
+from django_speedboost.template import Context, Engine, Template, TemplateSyntaxError
+from django_speedboost.template.base import Node
 
 from .templatetags import custom, inclusion
 from .utils import ROOT

@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
 
 from django.http import HttpRequest
-from django.template import (
+from django.test import RequestFactory, SimpleTestCase, override_settings
+
+from django_speedboost.template import (
     Context, RequestContext, Template, Variable, VariableDoesNotExist,
 )
-from django.template.context import RenderContext
-from django.test import RequestFactory, SimpleTestCase, override_settings
+from django_speedboost.template.context import RenderContext
 
 
 class ContextTests(SimpleTestCase):
@@ -108,10 +109,10 @@ class ContextTests(SimpleTestCase):
 class RequestContextTests(SimpleTestCase):
 
     @override_settings(TEMPLATES=[{
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'BACKEND': 'django_speedboost.template.backends.django.DjangoTemplates',
         'OPTIONS': {
             'loaders': [
-                ('django.template.loaders.locmem.Loader', {
+                ('django_speedboost.template.loaders.locmem.Loader', {
                     'child': '{{ var|default:"none" }}',
                 }),
             ],

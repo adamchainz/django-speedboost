@@ -5,8 +5,8 @@ import time
 from datetime import datetime
 
 from django.conf import settings
-from django.template import Context, engines
-from django.template.response import (
+from django_speedboost.template import Context, engines
+from django_speedboost.template.response import (
     ContentNotRenderedError, SimpleTemplateResponse, TemplateResponse,
 )
 from django.test import (

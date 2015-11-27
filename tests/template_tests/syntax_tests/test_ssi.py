@@ -2,13 +2,13 @@ from __future__ import unicode_literals
 
 import os
 
-from django.template import Context, Engine
 from django.test import SimpleTestCase, ignore_warnings
 from django.utils.deprecation import (
     RemovedInDjango19Warning, RemovedInDjango110Warning,
 )
 
 from ..utils import ROOT, setup
+from django_speedboost.template import Context, Engine
 
 
 @ignore_warnings(category=RemovedInDjango110Warning)

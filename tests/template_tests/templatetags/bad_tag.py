@@ -1,4 +1,4 @@
-from django import template
+from django_speedboost import template
 
 register = template.Library()
 

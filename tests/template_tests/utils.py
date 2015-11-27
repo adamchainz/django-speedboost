@@ -5,14 +5,15 @@ from __future__ import unicode_literals
 import functools
 import os
 
-from django import template
-from django.template import Library
-from django.template.base import libraries
-from django.template.engine import Engine
 from django.test.utils import override_settings
 from django.utils._os import upath
 from django.utils.encoding import python_2_unicode_compatible
 from django.utils.safestring import mark_safe
+
+from django_speedboost import template
+from django_speedboost.template import Library
+from django_speedboost.template.base import libraries
+from django_speedboost.template.engine import Engine
 
 ROOT = os.path.dirname(os.path.abspath(upath(__file__)))
 TEMPLATE_DIR = os.path.join(ROOT, 'templates')

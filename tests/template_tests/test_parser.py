@@ -5,8 +5,8 @@ from __future__ import unicode_literals
 
 from unittest import TestCase
 
-from django.template import Library, Template, TemplateSyntaxError
-from django.template.base import (
+from django_speedboost.template import Library, Template, TemplateSyntaxError
+from django_speedboost.template.base import (
     TOKEN_BLOCK, FilterExpression, Parser, Token, TokenParser, Variable,
 )
 from django.test import override_settings

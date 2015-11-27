@@ -1,7 +1,7 @@
 import os
 
-from django.template import Context
-from django.template.engine import Engine
+from django_speedboost.template import Context
+from django_speedboost.template.engine import Engine
 from django.test import SimpleTestCase, ignore_warnings
 from django.utils.deprecation import RemovedInDjango110Warning
 

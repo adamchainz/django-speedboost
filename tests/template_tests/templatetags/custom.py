@@ -1,8 +1,9 @@
 import operator
 
-from django import template
 from django.template.defaultfilters import stringfilter
 from django.utils import six
+
+from django_speedboost import template
 
 register = template.Library()
 

@@ -1,6 +1,7 @@
-from django.template import TemplateSyntaxError
 from django.test import SimpleTestCase
 from django.utils.safestring import mark_safe
+
+from django_speedboost.template import TemplateSyntaxError
 
 from ..utils import SafeClass, UnsafeClass, setup
 

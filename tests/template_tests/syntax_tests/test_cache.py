@@ -1,6 +1,7 @@
 from django.core.cache import cache
-from django.template import Context, Template, TemplateSyntaxError
 from django.test import SimpleTestCase, override_settings
+
+from django_speedboost.template import Context, Template, TemplateSyntaxError
 
 from ..utils import setup
 

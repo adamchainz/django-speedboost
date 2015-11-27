@@ -1,6 +1,7 @@
-from django.template import TemplateSyntaxError
 from django.test import SimpleTestCase, ignore_warnings
 from django.utils.deprecation import RemovedInDjango110Warning
+
+from django_speedboost.template import TemplateSyntaxError
 
 from ..utils import setup
 

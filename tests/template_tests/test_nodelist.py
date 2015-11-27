@@ -1,7 +1,7 @@
 from unittest import TestCase
 
-from django.template import Context, Template
-from django.template.base import VariableNode
+from django_speedboost.template import Context, Template
+from django_speedboost.template.base import VariableNode
 from django.test import override_settings
 
 
