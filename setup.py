@@ -12,5 +12,5 @@ except ImportError:
 setup(
     name='django-speedboost',
     packages=['django_speedboost'],
-    ext_modules=cythonize("_django_speedboost.pyx")
+    ext_modules=cythonize('django_speedboost/**/*.pyx')
 )

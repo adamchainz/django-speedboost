@@ -9,17 +9,8 @@ SECRET_KEY = 'THISuISdNOT9A$SECRET9x&ji!vceayg+wwt472!bgs$0!i3k4'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'django_speedboost',
-        'USER': '',
-        'PASSWORD': '',
-        'HOST': '',
-        'PORT': '',
-        'OPTIONS': {'charset': 'utf8mb4'},
-        'TEST': {
-            'COLLATION': "utf8mb4_general_ci",
-            'CHARSET': "utf8mb4"
-        }
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': 'memory://',
     }
 }
 
@@ -37,9 +28,6 @@ INSTALLED_APPS = (
 
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
 ROOT_URLCONF = 'urls'
