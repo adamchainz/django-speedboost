@@ -1,3 +1,4 @@
+include django_speedboost.pth
 include _django_speedboost.pyx
 
 recursive-include tests *
