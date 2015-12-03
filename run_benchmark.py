@@ -31,6 +31,30 @@ def main():
     print "django_speedboost quote_name:", result_speedboost
     print "relative speed boost", (result_orig / result_speedboost)
 
+    normalize_test = dedent("""\
+        normalize(r"")
+        normalize(r"\\\\^\$\.\|\?\*\+\(\)\[")
+        normalize(r"(.*)-(.+)")
+        normalize(r"(?i)(?L)(?m)(?s)(?u)(?#)")
+        normalize(r"(?:non-capturing)")
+        normalize(r"(?P<first_group_name>.*)-(?P<second_group_name>.*)")
+        normalize(r"(?P<first_group_name>.*)-(?P=first_group_name)")
+    """)
+
+    result_orig = timeit.timeit(
+        setup="from django.utils.regex_helper import normalize",
+        stmt=normalize_test,
+        number=10000,
+    )
+    print "original normalize:", result_orig
+    result_speedboost = timeit.timeit(
+        setup="from _django_speedboost import normalize",
+        stmt=normalize_test,
+        number=10000,
+    )
+    print "django_speedboost normalize:", result_speedboost
+    print "relative speed boost", (result_orig / result_speedboost)
+
 
 if __name__ == '__main__':
     main()
