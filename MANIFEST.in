@@ -1,6 +1,6 @@
 include django_speedboost.pth
-include _django_speedboost.pyx
 
+recursive-include * *.pyx
 recursive-include tests *
 recursive-exclude * __pycache__
 recursive-exclude * *.py[co]

@@ -1,7 +1,7 @@
 import sys
 
 from distutils import sysconfig
-from setuptools import setup
+from setuptools import find_packages, setup
 
 site_packages_path = sysconfig.get_python_lib(plat_specific=True)
 site_packages_rel_path = site_packages_path[len(sysconfig.EXEC_PREFIX) + 1:]
@@ -16,8 +16,8 @@ except ImportError:
 
 setup(
     name='django-speedboost',
-    packages=['django_speedboost'],
-    ext_modules=cythonize("_django_speedboost.pyx"),
+    packages=find_packages(exclude=['tests']),
+    ext_modules=cythonize('**/*.pyx'),
     data_files=[
         (site_packages_rel_path, ['django_speedboost.pth']),
     ],

@@ -1,0 +1,16 @@
+{
+  "tests/template_tests/syntax_tests/test_cache.py::CacheTagTests::test_cache03": true, 
+  "tests/template_tests/syntax_tests/test_cache.py::CacheTagTests::test_cache04": true, 
+  "tests/template_tests/syntax_tests/test_cache.py::CacheTagTests::test_cache05": true, 
+  "tests/template_tests/syntax_tests/test_cache.py::CacheTagTests::test_cache06": true, 
+  "tests/template_tests/syntax_tests/test_cache.py::CacheTagTests::test_cache07": true, 
+  "tests/template_tests/syntax_tests/test_cache.py::CacheTagTests::test_cache08": true, 
+  "tests/template_tests/syntax_tests/test_cache.py::CacheTagTests::test_cache13": true, 
+  "tests/template_tests/syntax_tests/test_cache.py::CacheTagTests::test_cache14": true, 
+  "tests/template_tests/syntax_tests/test_cache.py::CacheTagTests::test_cache15": true, 
+  "tests/template_tests/syntax_tests/test_cache.py::CacheTagTests::test_cache16": true, 
+  "tests/template_tests/syntax_tests/test_cache.py::CacheTagTests::test_cache17": true, 
+  "tests/template_tests/syntax_tests/test_cache.py::CacheTagTests::test_cache18": true, 
+  "tests/template_tests/syntax_tests/test_cache.py::CacheTests::test_cache_fragment_cache": true, 
+  "tests/template_tests/syntax_tests/test_cache.py::CacheTests::test_cache_missing_backend": true
+}
