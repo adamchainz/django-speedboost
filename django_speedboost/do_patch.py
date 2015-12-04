@@ -1,4 +1,4 @@
-# import imp
+from collections import defaultdict
 import importlib
 import sys
 
@@ -17,12 +17,13 @@ import sys
 
 
 class SpeedboostImporter(object):
+    to_do = defaultdict(lambda: defaultdict(list))
     done = set()
 
     def find_module(self, fullname, path=None):
-        if fullname == 'django.template.base' and fullname not in self.done:
+        if fullname in self.to_do and fullname not in self.done:
             self.path = path
-            self.done.add('django.template.base')
+            self.done.add(fullname)
             return self
         return None
 
@@ -30,12 +31,33 @@ class SpeedboostImporter(object):
         if name in sys.modules:
             return sys.modules[name]
 
+        # Here we are definitely *before* it gets imported
+        for func in self.to_do[name]['before']:
+            func()
+
         # RECURSION
         # Now we won't respond to the new import statement
         mod = importlib.import_module(name)
-        import pdb; pdb.set_trace()
-        mod._django_speedboost = True
+
+        # Here we are definitely *after* it gets imported
+        for func in self.to_do[name]['after']:
+            func()
+
         return mod
 
-if not any(isinstance(imp, SpeedboostImporter) for imp in sys.meta_path):
-    sys.meta_path.append(SpeedboostImporter())
+importer = SpeedboostImporter()
+
+sys.meta_path.append(importer)
+
+
+def before_imported(name):
+    def take_a_func(func):
+        importer.to_do[name]['before'].append(func)
+        return func
+    return take_a_func
+
+
+@before_imported('django.template.defaulttags')
+def patch_base():
+    base = sys.modules['django.template.base']
+    base._django_speedboost = True
