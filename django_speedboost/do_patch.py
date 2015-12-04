@@ -1,12 +1,13 @@
-from collections import defaultdict
 import importlib
 import sys
+from collections import defaultdict
 
 
 class HookSpec(object):
-    before = []
-    replacer = None
-    after = []
+    def __init__(self):
+        self.before = []
+        self.replacer = None
+        self.after = []
 
 
 class HookImporter(object):
@@ -39,7 +40,7 @@ class HookImporter(object):
             sys.modules[name] = mod
 
         for func in spec.after:
-            func()
+            func(mod)
 
         return mod
 
@@ -60,6 +61,19 @@ def replaces(name):
         importer.to_do[name].replacer = func
         return func
     return decorator
+
+
+def after_imported(name):
+    def decorator(func):
+        importer.to_do[name].after.append(func)
+        return func
+    return decorator
+
+
+@after_imported('django.db.backends.mysql.operations')
+def replace_quote_name(mod):
+    from django_speedboost.db.backends.mysql.operations import quote_name
+    mod.DatabaseOperations.quote_name = quote_name
 
 
 @replaces('django.utils.regex_helper')
