@@ -1,10 +1,10 @@
 # -*- coding:utf-8 -*-
 from django.test import TestCase
 
-import django.template.base
+import django.template.defaulttags
 
 
 class PatchedTests(TestCase):
 
     def test_is_patched(self):
-        assert getattr(django.template.base, '_django_speedboost')
+        assert getattr(django.template.defaulttags.IfNode, '_speedboosted')
