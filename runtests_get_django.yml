@@ -16,7 +16,7 @@
       command: tar xvf django.tar.gz
       args:
         chdir: '{{ env_path }}/djangotests'
-        creates: '{{ env_path }}/djangotests/django-{{ django_version }}/'
+        creates: '{{ env_path }}/djangotests/django-{{ django_version }}/AUTHORS'
 
     - name: Django install test dependencies
       pip:

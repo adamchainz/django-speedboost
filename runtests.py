@@ -8,6 +8,8 @@ import subprocess
 
 import pytest
 
+from django_speedboost import __django_version__
+
 try:
     from flake8.main import main as flake8_main
 except ImportError:
@@ -54,19 +56,20 @@ def tests_main():
 
 
 def tests_django():
-    # Downloads the relevant version of Django
+    # Use Ansible to idemptotenly grab the tested-against version of Django
     env_path = os.environ['VIRTUAL_ENV']
     exitcode = subprocess.call([
-        'ansible-playbook', 'runtests-django.yml',
+        'ansible-playbook', 'runtests_get_django.yml',
         '-i', '127.0.0.1,',
         '-e', 'env_path=' + env_path,
         '-e', 'python_version=' + str(sys.version_info[0]),
-        '-e', 'django_version=1.8.7',
+        '-e', 'django_version=' + __django_version__,
     ])
     if exitcode:
         return exitcode
+
     # Run Django's test suite
-    django_path = env_path + '/djangotests/django-1.8.7/'
+    django_path = env_path + '/djangotests/django-' + __django_version__ + '/'
     return subprocess.call([
         sys.executable,
         django_path + 'tests/runtests.py',

@@ -1,7 +1,9 @@
+import os
+import re
 import sys
 
 from distutils import sysconfig
-from setuptools import find_packages, setup
+from setuptools import setup
 
 site_packages_path = sysconfig.get_python_lib(plat_specific=True)
 site_packages_rel_path = site_packages_path[len(sysconfig.EXEC_PREFIX) + 1:]
@@ -13,10 +15,30 @@ except ImportError:
     sys.exit(1)
 
 
+def get_version(package):
+    """
+    Return package version as listed in `__version__` in `init.py`.
+    """
+    init_py = open(os.path.join(package, '__init__.py')).read()
+    return re.search("__version__ = ['\"]([^'\"]+)['\"]", init_py).group(1)
+
+
+def get_packages(package):
+    """
+    Return root package and all sub-packages.
+    """
+    return [dirpath
+            for dirpath, dirnames, filenames in os.walk(package)
+            if os.path.exists(os.path.join(dirpath, '__init__.py'))]
+
+
+version = get_version('django_speedboost')
+
+
 setup(
     name='django-speedboost',
-    version='1.8.7.0',  # Django version + our version for that
-    packages=find_packages(exclude=['tests']),
+    version=version,
+    packages=get_packages('django_speedboost'),
     ext_modules=cythonize('**/*.pyx'),
     data_files=[
         (site_packages_rel_path, ['django_speedboost.pth']),
