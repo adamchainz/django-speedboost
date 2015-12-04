@@ -7,24 +7,8 @@ should be good enough for a large class of URLS, however.
 """
 from __future__ import unicode_literals
 
-# <django_speedboost>
-# replace the few six imports with lines copied from six, to
-# avoid django imports at compile time
-import sys
-
-# from django.utils import six
-# from django.utils.six.moves import zip
-
-PY3 = sys.version_info[0] == 3
-
-if PY3:
-    string_types = str,
-    zip = zip
-else:
-    string_types = basestring,
-    import itertools
-    zip = itertools.izip
-# </django_speedboost>
+from django.utils import six
+from django.utils.six.moves import zip
 
 # Mapping of an escape character to a representative of that class. So, e.g.,
 # "\w" is replaced by "x" in a reverse URL. A value of None means to ignore
@@ -330,7 +314,7 @@ def flatten_result(source):
     result_args = [[]]
     pos = last = 0
     for pos, elt in enumerate(source):
-        if isinstance(elt, string_types):
+        if isinstance(elt, six.string_types):
             continue
         piece = ''.join(source[last:pos])
         if isinstance(elt, Group):

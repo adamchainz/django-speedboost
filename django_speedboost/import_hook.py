@@ -69,21 +69,5 @@ def after_imported(name):
         return func
     return decorator
 
-
-@after_imported('django.db.backends.mysql.operations')
-def replace_quote_name(mod):
-    from django_speedboost.db.backends.mysql.operations import quote_name
-    mod.DatabaseOperations.quote_name = quote_name
-
-
-@replaces('django.utils.regex_helper')
-def get_regex_helper():
-    from django_speedboost.utils import regex_helper
-    return regex_helper
-
-
-# @before_imported('django.template.defaulttags')
-# def patch_base():
-#     from django_speedboost.template import base as fast_base
-#     base = sys.modules['django.template.base']
-#     base.Node.get_nodes_by_type = fast_base.Node.get_nodes_by_type
+# Now everything has been setup, we can register all the replacements
+from .replacements import *  # noqa

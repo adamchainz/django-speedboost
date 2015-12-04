@@ -1,1 +1,1 @@
-import django_speedboost.do_patch
+import django_speedboost.import_hook
