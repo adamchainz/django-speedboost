@@ -71,7 +71,7 @@ def tests_django():
         sys.executable,
         django_path + 'tests/runtests.py',
         '--settings', 'test_sqlite',
-        'template_tests',
+        'template_tests', 'utils_tests',
     ])
 
 
