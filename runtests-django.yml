@@ -1,0 +1,24 @@
+- hosts: 127.0.0.1
+  connection: local
+  gather_facts: no
+  tasks:
+    - name: Django tests directory exists
+      file:
+        path: '{{ env_path }}/djangotests'
+        state: directory
+
+    - name: Django tarball downloaded
+      get_url:
+        url: https://github.com/django/django/archive/{{ django_version }}.tar.gz
+        dest: '{{ env_path }}/djangotests/django.tar.gz'
+
+    - name: Django tarball extracted
+      command: tar xvf django.tar.gz
+      args:
+        chdir: '{{ env_path }}/djangotests'
+        creates: '{{ env_path }}/djangotests/django-{{ django_version }}/'
+
+    - name: Django install test dependencies
+      pip:
+        virtualenv: '{{ env_path }}'
+        requirements: '{{ env_path }}/djangotests/django-{{ django_version }}/tests/requirements/py{{ python_version }}.txt'

@@ -12,10 +12,10 @@ except ImportError:
     print("Could not import Cython.Build. Install `cython` and rerun.")
     sys.exit(1)
 
-# print >> sys.stderr, site_packages_path
 
 setup(
     name='django-speedboost',
+    version='1.8.7.0',  # Django version + our version for that
     packages=find_packages(exclude=['tests']),
     ext_modules=cythonize('**/*.pyx'),
     data_files=[

@@ -8,6 +8,11 @@ import subprocess
 
 import pytest
 
+try:
+    from flake8.main import main as flake8_main
+except ImportError:
+    pass
+
 
 def main():
     try:
@@ -24,12 +29,20 @@ def main():
     else:
         run_tests = False
 
+    try:
+        sys.argv.remove('--nodjangotests')
+    except ValueError:
+        run_django_tests = True
+    else:
+        run_django_tests = False
+
     if run_tests:
         exit_on_failure(tests_main())
+        if run_django_tests:
+            exit_on_failure(tests_django())
 
     if run_lint:
         exit_on_failure(run_flake8())
-        exit_on_failure(run_2to3())
         exit_on_failure(run_isort())
         exit_on_failure(run_setup_py_check())
 
@@ -40,30 +53,42 @@ def tests_main():
     return pytest.main()
 
 
+def tests_django():
+    # Downloads the relevant version of Django
+    env_path = os.environ['VIRTUAL_ENV']
+    exitcode = subprocess.call([
+        'ansible-playbook', 'runtests-django.yml',
+        '-i', '127.0.0.1,',
+        '-e', 'env_path=' + env_path,
+        '-e', 'python_version=' + str(sys.version_info[0]),
+        '-e', 'django_version=1.8.7',
+    ])
+    if exitcode:
+        return exitcode
+    # Run Django's test suite
+    django_path = env_path + '/djangotests/django-1.8.7/'
+    return subprocess.call([
+        sys.executable,
+        django_path + 'tests/runtests.py',
+        '--settings', 'test_sqlite',
+        'template_tests',
+    ])
+
+
 def run_flake8():
     print('Running flake8 code linting')
-    ret = subprocess.call(['flake8', 'django_speedboost', 'tests'])
-    print('flake8 failed' if ret else 'flake8 passed')
-    return ret
+    try:
+        original_argv = sys.argv
+        sys.argv = ['flake8', 'django_speedboost', 'tests']
+        did_fail = False
+        flake8_main()
+    except SystemExit:
+        did_fail = True
+    finally:
+        sys.argv = original_argv
 
-
-def run_2to3():
-    print('Running 2to3 checks')
-    output = subprocess.check_output([
-        '2to3',
-        '-f', 'idioms',
-        '-f', 'isinstance',
-        '-f', 'set_literal',
-        '-f', 'tuple_params',
-        'django_speedboost', 'tests'
-    ]).strip()
-    if output > '':
-        print('2to3 failed')
-        print(output)
-        return 1
-    else:
-        print('2to3 passed')
-        return 0
+    print('flake8 failed' if did_fail else 'flake8 passed')
+    return did_fail
 
 
 def run_isort():
